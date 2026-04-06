@@ -114,23 +114,21 @@ tr.selected:hover td{background:#e8f3ff}
 .empty{text-align:center;padding:40px;color:#aaa;font-size:13px}
 .case-selector{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
 .case-selector select{padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;background:#fff}
-@media(max-width:700px){
-  .side-panel{width:100%;position:static}
+/* 手機版側欄遮罩 */
+.side-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:190}
+.side-overlay.show{display:block}
+
+@media(max-width:768px){
   .layout{flex-direction:column}
   .form-row,.form-row.three{grid-template-columns:1fr}
   table{min-width:unset}
   th,td{font-size:12px}
   .num-cell{width:28px;font-size:11px;padding:0 3px}
-  .note-wrap{padding:0 3px;gap:2px}
-  .urgent-btn{width:20px;height:20px;font-size:10px;flex-shrink:0}
-  .note-input{font-size:12px;display:none}
   .name-cell{width:70px}
   .name-cell .cell-input{font-size:13px;font-weight:500}
   .check-cell{width:90px}
   .check-btn{width:28px;height:28px;font-size:13px}
-  .visit-cell{width:44px}
   .cell-input{font-size:12px;height:44px}
-  .del-cell{width:28px}
   .del-btn{font-size:13px}
   .progress-bar-wrap{padding:10px 14px}
   .sub-stats{gap:10px;font-size:11px}
@@ -138,6 +136,30 @@ tr.selected:hover td{background:#e8f3ff}
   .search-box{width:120px;font-size:12px}
   .add-btn{font-size:12px;padding:6px 10px}
   .month-label{font-size:13px}
+  /* 隱藏備註、電訪輸入、家訪輸入、刪除欄 */
+  table th:nth-child(2),table td:nth-child(2),
+  table th:nth-child(5),table td:nth-child(5),
+  table th:nth-child(6),table td:nth-child(6),
+  table th:nth-child(7),table td:nth-child(7){display:none}
+  /* 側欄從底部彈出覆蓋 */
+  .side-panel{
+    display:none;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    width:100%;
+    max-height:80vh;
+    overflow-y:auto;
+    border-radius:16px 16px 0 0;
+    border:none;
+    box-shadow:0 -4px 24px rgba(0,0,0,0.15);
+    z-index:200;
+    transform:translateY(100%);
+    transition:transform 0.28s ease;
+  }
+  .side-panel.open{
+    display:block;
+    transform:translateY(0);
+  }
 }
 </style>
 </head>
@@ -190,6 +212,8 @@ tr.selected:hover td{background:#e8f3ff}
           <tbody id="tbody"></tbody>
         </table>
       </div>
+      <!-- 側欄遮罩 -->
+      <div class="side-overlay" id="side-overlay" onclick="closePanel()"></div>
       <!-- 側欄 -->
       <div class="side-panel" id="side-panel">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
@@ -327,6 +351,7 @@ function openPanel(id){
   const c=db.cases.find(c=>c.id===id);
   const idx=db.cases.indexOf(c)+1;
   document.getElementById('side-panel').classList.add('open');
+  document.getElementById('side-overlay').classList.add('show');
   document.getElementById('side-name').textContent=c.name;
   document.getElementById('side-num').textContent='個案編號 #'+idx;
   document.getElementById('side-note').value=c.note||'';
@@ -339,6 +364,7 @@ function openPanel(id){
 function closePanel(){
   selectedId=null;
   document.getElementById('side-panel').classList.remove('open');
+  document.getElementById('side-overlay').classList.remove('show');
   renderList();
 }
 function saveSideNote(){
