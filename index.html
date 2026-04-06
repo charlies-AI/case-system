@@ -7,57 +7,65 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;background:#f5f5f5;color:#1a1a1a;min-height:100vh}
-.header{background:#fff;border-bottom:1px solid #e5e5e5;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.header{background:#fff;border-bottom:1px solid #e5e5e5;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
 .header h1{font-size:16px;font-weight:600}
 .nav-btn{padding:6px 14px;border:1px solid #ddd;border-radius:8px;background:none;cursor:pointer;font-size:13px;color:#555}
 .nav-btn.active,.nav-btn:hover{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 .container{max-width:1100px;margin:0 auto;padding:16px}
-/* 統計列 */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.stat{background:#fff;border-radius:10px;padding:12px 14px;text-align:center;border:1px solid #e5e5e5}
-.stat .num{font-size:22px;font-weight:600}
-.stat .lbl{font-size:11px;color:#888;margin-top:2px}
-.stat.done .num{color:#0f6e56}
-.stat.warn .num{color:#a32d2d}
-/* 月份切換 */
-.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.progress-bar-wrap{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:14px 20px;margin-bottom:14px}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.progress-title{font-size:14px;font-weight:600}
+.progress-nums{font-size:13px;color:#888}
+.progress-nums span{color:#1a1a1a;font-weight:600}
+.bar-bg{background:#f0f0f0;border-radius:20px;height:10px;overflow:hidden}
+.bar-fill{background:#e24b4a;border-radius:20px;height:10px;transition:width 0.3s}
+.sub-stats{display:flex;gap:20px;margin-top:8px;font-size:12px;color:#888}
+.sub-stats b{color:#1a1a1a}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .month-ctrl{display:flex;align-items:center;gap:6px}
 .month-ctrl button{padding:5px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-size:13px}
 .month-ctrl button:hover{background:#f0f0f0}
 .month-label{font-size:15px;font-weight:600;min-width:70px;text-align:center}
 .add-btn{padding:7px 16px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;margin-left:auto}
 .add-btn:hover{opacity:0.85}
-/* 表格 */
+.search-box{padding:6px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:160px}
 .tbl-wrap{background:#fff;border-radius:12px;border:1px solid #e5e5e5;overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:560px}
-col.c-note{width:160px}col.c-name{width:90px}col.c-review{width:120px}col.c-phone{width:80px}col.c-home{width:80px}col.c-del{width:40px}
+table{width:100%;border-collapse:collapse;min-width:580px}
 thead tr{background:#fafafa}
-th{padding:9px 10px;font-size:12px;font-weight:500;color:#888;border-bottom:1px solid #e5e5e5;text-align:left}
+th{padding:9px 10px;font-size:12px;font-weight:500;color:#888;border-bottom:1px solid #e5e5e5;text-align:left;white-space:nowrap}
 th.center{text-align:center}
 td{padding:0;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td:not(.done-cell):not(.overdue-cell):not(.near-cell){background:#fafafa}
-.cell-input{width:100%;height:38px;padding:4px 10px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none}
-.cell-input::placeholder{color:#ccc}
-.cell-input:focus{background:#f0f7ff}
+.num-cell{width:44px;text-align:center;font-size:12px;color:#aaa;padding:0 6px}
+.note-cell{width:200px}
+.name-cell{width:100px}
+.review-cell{width:120px}
+.visit-cell{width:70px}
+.del-cell{width:36px}
+.cell-input{width:100%;height:52px;padding:4px 8px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none}
+.cell-input::placeholder{color:#ddd}
+.cell-input:focus{background:#f8f8f8}
+.note-wrap{display:flex;align-items:center;gap:4px;padding:0 6px}
+.note-input{flex:1;height:52px;padding:4px 4px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none}
+.note-input::placeholder{color:#ddd}
+.note-input:focus{background:#f8f8f8;border-radius:6px}
+.urgent-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid #ddd;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;color:#ccc;font-weight:700}
+.urgent-btn.on{background:#e24b4a;border-color:#e24b4a;color:#fff}
 .done-cell{background:#e24b4a}
 .done-cell .cell-input{color:#fff;font-weight:600;text-align:center;background:transparent}
 .overdue-cell{background:#fff0f0}
 .overdue-cell .cell-input{color:#a32d2d}
 .near-cell{background:#fffbea}
 .near-cell .cell-input{color:#856404}
-.del-btn{width:100%;height:38px;background:none;border:none;cursor:pointer;color:#ccc;font-size:16px}
-.del-btn:hover{color:#a32d2d}
-.tag{font-size:10px;padding:1px 6px;border-radius:20px;margin-left:4px}
-.tag-over{background:#fcebeb;color:#a32d2d}
-.tag-near{background:#faeeda;color:#633806}
-.hint{font-size:11px;color:#aaa;margin-top:8px;padding:0 4px}
+.visit-input{text-align:center}
 
-/* 家訪紀錄頁面 */
-.page{display:none}
-.page.active{display:block}
-.case-selector{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
-.case-selector select{padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;background:#fff}
+.review-btn{width:36px;height:36px;border-radius:50%;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;color:#ccc}
+.review-btn.done{background:#1d9e75;border-color:#1d9e75;color:#fff}
+.review-btn:hover{border-color:#1d9e75}
+.del-btn{width:100%;height:52px;background:none;border:none;cursor:pointer;color:#ddd;font-size:16px}
+.del-btn:hover{color:#a32d2d}
+.hint{font-size:11px;color:#aaa;margin-top:8px;padding:0 4px}
+.page{display:none}.page.active{display:block}
 .visit-form{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:20px;margin-bottom:16px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .form-row.three{grid-template-columns:1fr 1fr 1fr}
@@ -66,7 +74,6 @@ tr:hover td:not(.done-cell):not(.overdue-cell):not(.near-cell){background:#fafaf
 .field input,.field select,.field textarea{padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#1a1a1a;background:#fff}
 .field textarea{resize:vertical;min-height:70px}
 .section-lbl{font-size:12px;font-weight:500;color:#888;margin-bottom:8px;margin-top:16px}
-.section-lbl:first-child{margin-top:0}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
 .chip{padding:5px 12px;border-radius:20px;border:1px solid #ddd;font-size:12px;cursor:pointer;background:#fff;color:#333;transition:all 0.1s;user-select:none}
 .chip:hover{border-color:#888}
@@ -77,43 +84,47 @@ tr:hover td:not(.done-cell):not(.overdue-cell):not(.near-cell){background:#fafaf
 .result-box{background:#f8f8f8;border:1px solid #e5e5e5;border-radius:10px;padding:16px;font-size:13px;line-height:1.9;white-space:pre-wrap;margin-top:14px}
 .copy-btn{margin-top:8px;padding:7px 16px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#555}
 .copy-btn:hover{background:#f0f0f0}
-/* 歷史紀錄 */
 .record-card{background:#fff;border-radius:10px;border:1px solid #e5e5e5;padding:14px;margin-bottom:10px}
 .record-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .rtype{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:500}
 .rtype-home{background:#e1f5ee;color:#085041}
 .rtype-phone{background:#e6f1fb;color:#0c447c}
 .rdate{font-size:12px;color:#888}
-.rworker{font-size:12px;color:#888}
 .rbody{font-size:13px;line-height:1.8}
 .rdel{background:none;border:none;cursor:pointer;color:#ccc;font-size:12px;padding:2px 8px;border-radius:6px}
 .rdel:hover{background:#fcebeb;color:#a32d2d}
 .empty{text-align:center;padding:40px;color:#aaa;font-size:13px}
+.case-selector{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.case-selector select{padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;background:#fff}
 @media(max-width:600px){
-  .stats{grid-template-columns:1fr 1fr}
   .form-row,.form-row.three{grid-template-columns:1fr}
-  col.c-note{width:120px}
+  .note-cell{width:140px}.name-cell{width:80px}
 }
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>個案管理系統</h1>
   <button class="nav-btn active" onclick="showPage('list',this)">個案列表</button>
   <button class="nav-btn" onclick="showPage('visit',this)">家訪紀錄</button>
   <button class="nav-btn" onclick="showPage('history',this)">歷史紀錄</button>
 </div>
-
 <div class="container">
 
   <!-- 個案列表 -->
   <div class="page active" id="page-list">
-    <div class="stats">
-      <div class="stat"><div class="num" id="s-total">0</div><div class="lbl">總個案數</div></div>
-      <div class="stat done"><div class="num" id="s-phone">0</div><div class="lbl">本月電訪完成</div></div>
-      <div class="stat done"><div class="num" id="s-home">0</div><div class="lbl">本月家訪完成</div></div>
-      <div class="stat warn"><div class="num" id="s-overdue">0</div><div class="lbl">複評逾期</div></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-top">
+        <div class="progress-title">本月完成進度</div>
+        <div class="progress-nums">完成 <span id="p-done">0</span> / <span id="p-total">0</span> 個案</div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="p-bar" style="width:0%"></div></div>
+      <div class="sub-stats">
+        <div>電訪完成：<b id="s-phone">0</b> 筆</div>
+        <div>家訪完成：<b id="s-home">0</b> 筆</div>
+        <div>複評逾期：<b id="s-overdue" style="color:#a32d2d">0</b> 筆</div>
+        <div>待處理：<b id="s-urgent" style="color:#e24b4a">0</b> 筆</div>
+      </div>
     </div>
     <div class="toolbar">
       <div class="month-ctrl">
@@ -122,58 +133,43 @@ tr:hover td:not(.done-cell):not(.overdue-cell):not(.near-cell){background:#fafaf
         <button onclick="changeMonth(1)">&#8250;</button>
         <button onclick="goToday()" style="font-size:11px;padding:5px 8px">本月</button>
       </div>
+      <input class="search-box" type="text" id="search" placeholder="搜尋姓名..." oninput="renderList()">
       <button class="add-btn" onclick="addCase()">＋ 新增個案</button>
     </div>
     <div class="tbl-wrap">
       <table>
-        <colgroup><col class="c-note"><col class="c-name"><col class="c-review"><col class="c-phone"><col class="c-home"><col class="c-del"></colgroup>
         <thead><tr>
-          <th>備註</th><th>姓名</th>
-          <th class="center">複評時間</th>
-          <th class="center">電訪</th>
-          <th class="center">家訪</th>
-          <th></th>
+          <th class="center" style="width:44px">#</th>
+          <th style="width:200px">備註</th>
+          <th style="width:100px">姓名</th>
+          <th class="center" style="width:80px">複評完成</th>
+          <th class="center" style="width:70px">電訪</th>
+          <th class="center" style="width:70px">家訪</th>
+          <th style="width:36px"></th>
         </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <div class="hint">電訪／家訪欄輸入「1」代表本月完成，格子自動變紅。複評超過6個月自動提示。</div>
+    <div class="hint">電訪／家訪欄輸入「1」代表本月完成，格子自動變紅。「！」按鈕標記待處理個案。複評超過6個月自動提示。</div>
   </div>
 
   <!-- 家訪紀錄 -->
   <div class="page" id="page-visit">
     <div class="visit-form">
       <div class="form-row three">
-        <div class="field"><label>選擇個案</label>
-          <select id="v-case"><option value="">-- 請選擇 --</option></select>
-        </div>
+        <div class="field"><label>選擇個案</label><select id="v-case"><option value="">-- 請選擇 --</option></select></div>
         <div class="field"><label>訪視日期</label><input type="date" id="v-date"></div>
-        <div class="field"><label>類型</label>
-          <select id="v-type"><option value="home">家訪</option><option value="phone">電訪</option></select>
-        </div>
+        <div class="field"><label>類型</label><select id="v-type"><option value="home">家訪</option><option value="phone">電訪</option></select></div>
       </div>
       <div class="form-row">
         <div class="field"><label>負責社工</label><input id="v-worker" placeholder="姓名"></div>
       </div>
-
-      <div class="section-lbl">活動能力</div>
-      <div class="chips" id="mob-chips"></div>
-
-      <div class="section-lbl">居家環境</div>
-      <div class="chips" id="env-chips"></div>
-
-      <div class="section-lbl">情緒與配合度</div>
-      <div class="chips" id="mood-chips"></div>
-
-      <div class="section-lbl">目前使用服務</div>
-      <div class="chips" id="svc-chips"></div>
-
-      <div class="section-lbl">風險評估</div>
-      <div class="chips" id="risk-chips"></div>
-
-      <div class="field" style="margin-top:14px"><label>補充說明（選填）</label>
-        <textarea id="v-extra" placeholder="其他觀察或特殊狀況..."></textarea>
-      </div>
+      <div class="section-lbl">活動能力</div><div class="chips" id="mob-chips"></div>
+      <div class="section-lbl">居家環境</div><div class="chips" id="env-chips"></div>
+      <div class="section-lbl">情緒與配合度</div><div class="chips" id="mood-chips"></div>
+      <div class="section-lbl">目前使用服務</div><div class="chips" id="svc-chips"></div>
+      <div class="section-lbl">風險評估</div><div class="chips" id="risk-chips"></div>
+      <div class="field" style="margin-top:14px"><label>補充說明（選填）</label><textarea id="v-extra" placeholder="其他觀察或特殊狀況..."></textarea></div>
       <button class="gen-btn" onclick="generateRecord()">生成家訪紀錄</button>
       <div id="result-area"></div>
     </div>
@@ -183,38 +179,33 @@ tr:hover td:not(.done-cell):not(.overdue-cell):not(.near-cell){background:#fafaf
   <div class="page" id="page-history">
     <div class="case-selector">
       <label style="font-size:13px;color:#888">篩選個案：</label>
-      <select id="h-case" onchange="renderHistory()">
-        <option value="">全部個案</option>
-      </select>
+      <select id="h-case" onchange="renderHistory()"><option value="">全部個案</option></select>
     </div>
     <div id="history-list"></div>
   </div>
 
 </div>
-
 <script>
+const NAMES = ["楊王玲珠","李佳榮","李淑娟","蕭新喜","曹橋林","蕭濱星","高金玉","朱豪哲","李基顯","陳亭臻","李瑞仙","陳劉甚","陳葉月枝","林羅俊","張國基","柯春男","游照美","曾素敏","吳慧貞","張楊彩","楊美雲","莊武男","羅莉","林劍亭","黃士馨","黃江泉","陳吳寶","劉麗秀","江鄭脩","周美霞","邵代卿","劉春枝","許純真/郭天賜","郭天賜/許純真","曾木耳","余錦魚","李簡喜蓮","曾淑敏","郭錦秀","黃曹彩鑾","邱錦檉","盧景麟","賴石完","郭佳錦","陳許採雲","李佳倖","陳謂寬","謝桃枝","米張書香","柳鳳春","吳呂美珠","吳涂綺玲","賴藝仁","徐天一","劉椿隆","楊嘉芸","鍾雲秀","許兆年 (許黃阿雪)","陳陽明","林惠瑩 (黃仲雄)","林趙金枝","許黃阿雪(許兆年)","李香妹","許乃","陳碧蓮","劉金德 (王寶蓮)","王寶蓮 (劉金德)","周謝佩玲","陳寶珠","陳國翹","朱平啟媛","黃竹發","高陳麗","高清河","王張素珠","洪鄭詠雪 (洪焜城)","高瑞宏","趙容(林春富)","林春富(趙容)","張薫圭","莊玉梅","葉曾秀梅","林蔡正","劉坤堂","曾淑貞","卓林阿滿","李佳州","陳朝瑞","李青蓉","吳懿庭","楊義勝","林秀鳳","劉晋榮","賴良","邱蕭秀櫻","嚴陳秀枝","李呂美朋 (李暮榮)","李暮榮 (李呂美朋)","陳珪琪","黃種銓 (謝錦霜)","謝錦霜 (黃種銓)","李懷真","許碧霞","林黃靜宜","陳麗娟","李福生","林博昭","王金地","邱寶珠","林麗華","林廖香綢","粘少華","吳鳳玉","廖碧玉","林楊淑慧","洪焜城 (洪鄭詠雪)","譚福修","陳蔡淑媛","柯雪治","張莊秀香 (張添進)","張添進 (張莊秀香)","謝梅","劉怡孋","黃月桂","高順顯","華寶餘","陳簡郁蘭","林游澄澄","鄧筑源","劉勤","陳侯阿秀","陳水力","曹杰福","錢建嘉","廖雪珍","簡漢陽","黃秀美","富蒼生","周蔚任","謝王釋敏","陳俊昭","花雲源","張淼本","林禮中","馬元得","陳群品","紀昭行","連錦涁","林清緹","林蕙莞"];
+
 const today = new Date();
 let viewYear = today.getFullYear();
 let viewMonth = today.getMonth() + 1;
 
-let db = JSON.parse(localStorage.getItem('casetracker_v2') || 'null');
+let db = JSON.parse(localStorage.getItem('casetracker_v3') || 'null');
 if (!db) {
+  let nid = 1;
   db = {
-    nid: 4,
-    cases: [
-      {id:1,note:'',name:'王美惠',review:'2025-09-15'},
-      {id:2,note:'死亡',name:'XXX',review:''},
-      {id:3,note:'',name:'陳亭臻',review:'2025-10-01'},
-    ],
-    visits:[],
-    records:[]
+    nid: NAMES.length + 1,
+    cases: NAMES.map((name, i) => ({id: i+1, note:'', urgent:false, name, review:''})),
+    visits: [],
+    records: []
   };
-  save();
+  localStorage.setItem('casetracker_v3', JSON.stringify(db));
 }
 
-function save(){localStorage.setItem('casetracker_v2',JSON.stringify(db))}
+function save(){localStorage.setItem('casetracker_v3', JSON.stringify(db))}
 
-// ── 頁面切換 ──
 function showPage(name, btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -225,7 +216,6 @@ function showPage(name, btn){
   if(name==='history') initHistory();
 }
 
-// ── 列表 ──
 function getVisit(caseId,y,m){
   return db.visits.find(v=>v.caseId===caseId&&v.year===y&&v.month===m)||{phone:'',home:''};
 }
@@ -242,35 +232,69 @@ function reviewStatus(ds){
   return'ok';
 }
 
+
+function toggleReview(id, btn){
+  const c=db.cases.find(c=>c.id===id);
+  if(c){c.review_done=!c.review_done;save();}
+  btn.classList.toggle('done');
+  btn.textContent=c.review_done?'✓':'';
+}
 function renderList(){
-  const y=viewYear,m=viewMonth;
+  const y=viewYear, m=viewMonth;
+  const q=(document.getElementById('search')||{}).value||'';
   document.getElementById('month-label').textContent=`${y}/${String(m).padStart(2,'0')}`;
-  let total=0,phoneDone=0,homeDone=0,overdue=0;
-  const rows=db.cases.map(c=>{
+
+  let total=0,phoneDone=0,homeDone=0,overdue=0,urgent=0,anyDone=0;
+  const filtered = db.cases.filter(c=>c.name.includes(q));
+
+  const rows = filtered.map((c,idx)=>{
     total++;
     const v=getVisit(c.id,y,m);
-    const pd=v.phone==='1',hd=v.home==='1';
-    if(pd)phoneDone++;if(hd)homeDone++;
+    const pd=v.phone==='1', hd=v.home==='1';
+    if(pd)phoneDone++;
+    if(hd)homeDone++;
+    if(pd||hd)anyDone++;
     const rs=reviewStatus(c.review);
-    if(rs==='over')overdue++;
-    const revCls=rs==='over'?'overdue-cell':rs==='near'?'near-cell':'';
+    // overdue removed
+    if(c.urgent)urgent++;
+    const revCls='';
+    const globalIdx = db.cases.indexOf(c)+1;
     return `<tr>
-      <td><input class="cell-input" value="${esc(c.note)}" onchange="updCase(${c.id},'note',this.value)" placeholder="備註..."></td>
+      <td class="num-cell">${globalIdx}</td>
+      <td>
+        <div class="note-wrap">
+          <button class="urgent-btn ${c.urgent?'on':''}" onclick="toggleUrgent(${c.id},this)" title="待處理">!</button>
+          <input class="note-input" value="${esc(c.note)}" onchange="updCase(${c.id},'note',this.value)" placeholder="備註...">
+        </div>
+      </td>
       <td><input class="cell-input" value="${esc(c.name)}" onchange="updCase(${c.id},'name',this.value)"></td>
-      <td class="${revCls}"><input class="cell-input" style="text-align:center" value="${esc(c.review)}" placeholder="YYYY-MM-DD" onchange="updCase(${c.id},'review',this.value);renderList()"></td>
-      <td class="${pd?'done-cell':''}"><input class="cell-input" style="text-align:center" value="${v.phone}" oninput="onVisit(${c.id},'phone',this)" placeholder=""></td>
-      <td class="${hd?'done-cell':''}"><input class="cell-input" style="text-align:center" value="${v.home}" oninput="onVisit(${c.id},'home',this)" placeholder=""></td>
+      <td style="text-align:center"><button class="review-btn ${c.review_done?'done':''}" onclick="toggleReview(${c.id},this)" title="點擊標記複評完成">${c.review_done?'✓':''}</button></td>
+      <td class="${pd?'done-cell':''}"><input class="cell-input visit-input" value="${v.phone}" oninput="onVisit(${c.id},'phone',this)" placeholder=""></td>
+      <td class="${hd?'done-cell':''}"><input class="cell-input visit-input" value="${v.home}" oninput="onVisit(${c.id},'home',this)" placeholder=""></td>
       <td><button class="del-btn" onclick="delCase(${c.id})">×</button></td>
     </tr>`;
   }).join('');
-  document.getElementById('tbody').innerHTML=rows;
-  document.getElementById('s-total').textContent=total;
-  document.getElementById('s-phone').textContent=phoneDone;
-  document.getElementById('s-home').textContent=homeDone;
-  document.getElementById('s-overdue').textContent=overdue;
+
+  document.getElementById('tbody').innerHTML = rows;
+  document.getElementById('p-done').textContent = anyDone;
+  document.getElementById('p-total').textContent = total;
+  document.getElementById('p-bar').style.width = total>0?Math.round(anyDone/total*100)+'%':'0%';
+  document.getElementById('s-phone').textContent = phoneDone;
+  document.getElementById('s-home').textContent = homeDone;
+  document.getElementById('s-overdue').textContent = overdue;
+  document.getElementById('s-urgent').textContent = urgent;
 }
 
 function esc(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+
+function toggleUrgent(id, btn){
+  const c=db.cases.find(c=>c.id===id);
+  if(c){c.urgent=!c.urgent;save();}
+  btn.classList.toggle('on');
+  const s=parseInt(document.getElementById('s-urgent').textContent)||0;
+  document.getElementById('s-urgent').textContent=c.urgent?s+1:Math.max(0,s-1);
+}
+
 function onVisit(id,field,input){
   const val=input.value.trim();
   setVisit(id,viewYear,viewMonth,field,val);
@@ -284,7 +308,7 @@ function updCase(id,field,val){
 function addCase(){
   const name=prompt('請輸入個案姓名：');
   if(!name||!name.trim())return;
-  db.cases.push({id:db.nid++,note:'',name:name.trim(),review:''});
+  db.cases.push({id:db.nid++,note:'',urgent:false,name:name.trim(),review:''});
   save();renderList();
 }
 function delCase(id){
@@ -302,7 +326,6 @@ function changeMonth(d){
 }
 function goToday(){viewYear=today.getFullYear();viewMonth=today.getMonth()+1;renderList();}
 
-// ── 家訪紀錄 ──
 const OPTS={
   mob:['自行行走','需輔具','需他人協助','臥床','使用輪椅'],
   env:['環境整潔','環境雜亂','有跌倒風險','採光不足','無障礙設施不足','環境良好'],
@@ -310,21 +333,17 @@ const OPTS={
   svc:['居家服務','日照中心','送餐服務','交通接送','輔具借用','喘息服務','醫療陪同','急難救助'],
   risk:['無立即風險','跌倒風險','營養不良','社會孤立','照顧者壓力大','需緊急介入']
 };
-
 function initVisit(){
   const sel=document.getElementById('v-case');
   sel.innerHTML='<option value="">-- 請選擇 --</option>'+db.cases.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
   document.getElementById('v-date').value=today.toISOString().slice(0,10);
   Object.entries(OPTS).forEach(([key,arr])=>{
     const isRisk=key==='risk';
-    document.getElementById(key+'-chips').innerHTML=arr.map(v=>`<span class="chip" onclick="toggleChip(this,'${isRisk?'on-warn':'on'}')">${v}</span>`).join('');
+    document.getElementById(key+'-chips').innerHTML=arr.map(v=>`<span class="chip" onclick="this.classList.toggle('${isRisk?'on-warn':'on'}')">${v}</span>`).join('');
   });
   document.getElementById('result-area').innerHTML='';
 }
-
-function toggleChip(el,cls){el.classList.toggle(cls);}
 function getChips(id,cls='on'){return[...document.querySelectorAll('#'+id+' .chip.'+cls)].map(c=>c.textContent);}
-
 function generateRecord(){
   const cid=parseInt(document.getElementById('v-case').value);
   if(!cid){alert('請先選擇個案');return;}
@@ -332,11 +351,7 @@ function generateRecord(){
   const date=document.getElementById('v-date').value;
   const type=document.getElementById('v-type').value;
   const worker=document.getElementById('v-worker').value||'社工';
-  const mob=getChips('mob-chips');
-  const env=getChips('env-chips');
-  const mood=getChips('mood-chips');
-  const svc=getChips('svc-chips');
-  const risk=getChips('risk-chips','on-warn');
+  const mob=getChips('mob-chips'),env=getChips('env-chips'),mood=getChips('mood-chips'),svc=getChips('svc-chips'),risk=getChips('risk-chips','on-warn');
   const extra=document.getElementById('v-extra').value;
   const typeTxt=type==='home'?'家訪':'電訪';
   let text=`【${typeTxt}紀錄】\n日期：${date}　類型：${typeTxt}　負責社工：${worker}\n個案姓名：${c.name}\n\n`;
@@ -352,7 +367,6 @@ function generateRecord(){
   document.getElementById('result-area').innerHTML=`<div class="result-box">${text.replace(/\n/g,'<br>')}</div><button class="copy-btn" onclick="navigator.clipboard.writeText(\`${text.replace(/`/g,'\\`')}\`).then(()=>{this.textContent='已複製 ✓';setTimeout(()=>this.textContent='複製紀錄文字',1500)})">複製紀錄文字</button>`;
 }
 
-// ── 歷史 ──
 function initHistory(){
   const sel=document.getElementById('h-case');
   const cur=sel.value;
@@ -370,7 +384,7 @@ function renderHistory(){
         <span class="rtype rtype-${r.type}">${r.type==='home'?'家訪':'電訪'}</span>
         <span class="rdate">${r.date}</span>
         <span style="font-weight:500">${r.caseName}</span>
-        <span class="rworker">${r.worker||''}</span>
+        <span class="rdate">${r.worker||''}</span>
       </div>
       <button class="rdel" onclick="delRecord(${r.id})">刪除</button>
     </div>
