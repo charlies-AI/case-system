@@ -11,7 +11,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .header h1{font-size:16px;font-weight:600}
 .nav-btn{padding:6px 14px;border:1px solid #ddd;border-radius:8px;background:none;cursor:pointer;font-size:13px;color:#555}
 .nav-btn.active,.nav-btn:hover{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
-.container{max-width:1100px;margin:0 auto;padding:16px}
+.container{max-width:1200px;margin:0 auto;padding:16px}
 .progress-bar-wrap{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:14px 20px;margin-bottom:14px}
 .progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .progress-title{font-size:14px;font-weight:600}
@@ -19,7 +19,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .progress-nums span{color:#1a1a1a;font-weight:600}
 .bar-bg{background:#f0f0f0;border-radius:20px;height:10px;overflow:hidden}
 .bar-fill{background:#e24b4a;border-radius:20px;height:10px;transition:width 0.3s}
-.sub-stats{display:flex;gap:20px;margin-top:8px;font-size:12px;color:#888}
+.sub-stats{display:flex;gap:20px;margin-top:8px;font-size:12px;color:#888;flex-wrap:wrap}
 .sub-stats b{color:#1a1a1a}
 .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .month-ctrl{display:flex;align-items:center;gap:6px}
@@ -29,42 +29,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .add-btn{padding:7px 16px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;margin-left:auto}
 .add-btn:hover{opacity:0.85}
 .search-box{padding:6px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:160px}
-.tbl-wrap{background:#fff;border-radius:12px;border:1px solid #e5e5e5;overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:580px}
+.layout{display:flex;gap:14px;align-items:flex-start}
+.tbl-wrap{flex:1;background:#fff;border-radius:12px;border:1px solid #e5e5e5;overflow:hidden;overflow-x:auto;min-width:0}
+table{width:100%;border-collapse:collapse;min-width:500px}
 thead tr{background:#fafafa}
 th{padding:9px 10px;font-size:12px;font-weight:500;color:#888;border-bottom:1px solid #e5e5e5;text-align:left;white-space:nowrap}
 th.center{text-align:center}
 td{padding:0;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-.num-cell{width:44px;text-align:center;font-size:12px;color:#aaa;padding:0 6px}
-.note-cell{width:200px}
-.name-cell{width:100px}
-.review-cell{width:120px}
-.visit-cell{width:70px}
+tr.selected td{background:#f0f7ff}
+tr:hover td{background:#fafafa}
+tr.selected:hover td{background:#e8f3ff}
+.num-cell{width:40px;text-align:center;font-size:12px;color:#aaa;padding:0 6px;cursor:pointer}
+.note-cell{width:180px}
+.name-cell{width:100px;cursor:pointer}
+.check-cell{width:130px;text-align:center}
+.visit-cell{width:66px}
 .del-cell{width:36px}
 .cell-input{width:100%;height:52px;padding:4px 8px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none}
 .cell-input::placeholder{color:#ddd}
 .cell-input:focus{background:#f8f8f8}
-.note-wrap{display:flex;align-items:center;gap:4px;padding:0 6px}
-.note-input{flex:1;height:52px;padding:4px 4px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none}
+.note-wrap{display:flex;align-items:center;gap:4px;padding:0 6px;height:52px}
+.note-input{flex:1;height:44px;padding:4px 4px;border:none;background:transparent;font-size:13px;color:#1a1a1a;font-family:inherit;outline:none;resize:none;overflow:hidden}
 .note-input::placeholder{color:#ddd}
 .note-input:focus{background:#f8f8f8;border-radius:6px}
-.urgent-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid #ddd;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;color:#ccc;font-weight:700}
+.urgent-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid #ddd;background:#fff;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;color:#ccc;font-weight:700}
 .urgent-btn.on{background:#e24b4a;border-color:#e24b4a;color:#fff}
 .done-cell{background:#e24b4a}
 .done-cell .cell-input{color:#fff;font-weight:600;text-align:center;background:transparent}
-.overdue-cell{background:#fff0f0}
-.overdue-cell .cell-input{color:#a32d2d}
-.near-cell{background:#fffbea}
-.near-cell .cell-input{color:#856404}
 .visit-input{text-align:center}
-
-.review-btn{width:36px;height:36px;border-radius:50%;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;color:#ccc}
-.review-btn.done{background:#1d9e75;border-color:#1d9e75;color:#fff}
-.review-btn:hover{border-color:#1d9e75}
 .del-btn{width:100%;height:52px;background:none;border:none;cursor:pointer;color:#ddd;font-size:16px}
 .del-btn:hover{color:#a32d2d}
+.check-btn{width:36px;height:36px;border-radius:50%;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;color:#ccc}
+.check-btn.done{background:#1d9e75;border-color:#1d9e75;color:#fff}
+.check-btn:hover{border-color:#1d9e75}
 .hint{font-size:11px;color:#aaa;margin-top:8px;padding:0 4px}
+
+/* 側欄 */
+.side-panel{width:280px;flex-shrink:0;background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:16px;display:none;position:sticky;top:80px}
+.side-panel.open{display:block}
+.side-name{font-size:16px;font-weight:600;margin-bottom:4px}
+.side-num{font-size:12px;color:#aaa;margin-bottom:12px}
+.side-label{font-size:11px;font-weight:500;color:#888;margin-bottom:6px;margin-top:14px}
+.side-label:first-of-type{margin-top:0}
+.side-note{width:100%;min-height:120px;padding:8px 10px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;color:#1a1a1a;resize:vertical;line-height:1.6}
+.side-note:focus{outline:none;border-color:#bbb}
+.side-save{width:100%;margin-top:10px;padding:8px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px}
+.side-save:hover{opacity:0.85}
+.side-close{float:right;background:none;border:none;cursor:pointer;color:#aaa;font-size:18px;line-height:1}
+.side-close:hover{color:#333}
+.urgent-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.urgent-toggle{padding:6px 14px;border:1.5px solid #ddd;border-radius:20px;background:#fff;cursor:pointer;font-size:12px;color:#888}
+.urgent-toggle.on{border-color:#e24b4a;background:#fff0f0;color:#a32d2d;font-weight:500}
+
+/* 頁面 */
 .page{display:none}.page.active{display:block}
 .visit-form{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:20px;margin-bottom:16px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
@@ -75,7 +93,7 @@ tr:last-child td{border-bottom:none}
 .field textarea{resize:vertical;min-height:70px}
 .section-lbl{font-size:12px;font-weight:500;color:#888;margin-bottom:8px;margin-top:16px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
-.chip{padding:5px 12px;border-radius:20px;border:1px solid #ddd;font-size:12px;cursor:pointer;background:#fff;color:#333;transition:all 0.1s;user-select:none}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid #ddd;font-size:12px;cursor:pointer;background:#fff;color:#333;user-select:none}
 .chip:hover{border-color:#888}
 .chip.on{background:#e1f5ee;border-color:#1d9e75;color:#085041}
 .chip.on-warn{background:#faeeda;border-color:#ba7517;color:#633806}
@@ -96,9 +114,10 @@ tr:last-child td{border-bottom:none}
 .empty{text-align:center;padding:40px;color:#aaa;font-size:13px}
 .case-selector{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
 .case-selector select{padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;background:#fff}
-@media(max-width:600px){
+@media(max-width:700px){
+  .side-panel{width:100%;position:static}
+  .layout{flex-direction:column}
   .form-row,.form-row.three{grid-template-columns:1fr}
-  .note-cell{width:140px}.name-cell{width:80px}
 }
 </style>
 </head>
@@ -122,7 +141,7 @@ tr:last-child td{border-bottom:none}
       <div class="sub-stats">
         <div>電訪完成：<b id="s-phone">0</b> 筆</div>
         <div>家訪完成：<b id="s-home">0</b> 筆</div>
-        <div>複評逾期：<b id="s-overdue" style="color:#a32d2d">0</b> 筆</div>
+        <div>電訪勾選：<b id="s-phone-check">0</b> 筆</div><div>家訪勾選：<b id="s-home-check">0</b> 筆</div>
         <div>待處理：<b id="s-urgent" style="color:#e24b4a">0</b> 筆</div>
       </div>
     </div>
@@ -136,21 +155,42 @@ tr:last-child td{border-bottom:none}
       <input class="search-box" type="text" id="search" placeholder="搜尋姓名..." oninput="renderList()">
       <button class="add-btn" onclick="addCase()">＋ 新增個案</button>
     </div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr>
-          <th class="center" style="width:44px">#</th>
-          <th style="width:200px">備註</th>
-          <th style="width:100px">姓名</th>
-          <th class="center" style="width:80px">複評完成</th>
-          <th class="center" style="width:70px">電訪</th>
-          <th class="center" style="width:70px">家訪</th>
-          <th style="width:36px"></th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <div class="layout">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th class="center" style="width:40px">#</th>
+            <th style="width:180px">備註</th>
+            <th style="width:100px">姓名</th>
+            <th class="center" style="width:130px">電訪完成 &nbsp; 家訪完成</th>
+            <th class="center" style="width:66px">電訪</th>
+            <th class="center" style="width:66px">家訪</th>
+            <th style="width:36px"></th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <!-- 側欄 -->
+      <div class="side-panel" id="side-panel">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+          <div>
+            <div class="side-name" id="side-name"></div>
+            <div class="side-num" id="side-num"></div>
+          </div>
+          <button class="side-close" onclick="closePanel()">×</button>
+        </div>
+        <div class="urgent-row">
+          <button class="urgent-toggle" id="side-urgent-btn" onclick="toggleUrgentSide()">！待處理</button>
+        </div>
+        <div class="side-label">完整備註</div>
+        <textarea class="side-note" id="side-note" placeholder="輸入備註內容..."></textarea>
+        <button class="side-save" onclick="saveSideNote()">儲存備註</button>
+        <div class="side-label" style="margin-top:16px">複評時間</div>
+        <input type="text" id="side-review" placeholder="YYYY-MM-DD" style="width:100%;padding:7px 10px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit">
+        <button class="side-save" style="margin-top:8px;background:#555" onclick="saveSideReview()">儲存複評時間</button>
+      </div>
     </div>
-    <div class="hint">電訪／家訪欄輸入「1」代表本月完成，格子自動變紅。「！」按鈕標記待處理個案。複評超過6個月自動提示。</div>
+    <div class="hint">點姓名或編號開啟側欄查看完整備註。電訪／家訪欄輸入「1」自動變紅。家電訪完成欄點圓圈打勾。</div>
   </div>
 
   <!-- 家訪紀錄 -->
@@ -190,111 +230,137 @@ const NAMES = ["楊王玲珠","李佳榮","李淑娟","蕭新喜","曹橋林","�
 
 const today = new Date();
 let viewYear = today.getFullYear();
-let viewMonth = today.getMonth() + 1;
+let viewMonth = today.getMonth()+1;
+let selectedId = null;
 
-let db = JSON.parse(localStorage.getItem('casetracker_v3') || 'null');
-if (!db) {
-  let nid = 1;
-  db = {
-    nid: NAMES.length + 1,
-    cases: NAMES.map((name, i) => ({id: i+1, note:'', urgent:false, name, review:''})),
-    visits: [],
-    records: []
-  };
-  localStorage.setItem('casetracker_v3', JSON.stringify(db));
+let db = JSON.parse(localStorage.getItem('casetracker_v5')||'null');
+if(!db){
+  db={nid:NAMES.length+1,cases:NAMES.map((name,i)=>({id:i+1,note:'',urgent:false,name,review:'',phone_done:false,home_done:false})),visits:[],records:[]};
+  localStorage.setItem('casetracker_v5',JSON.stringify(db));
 }
+function save(){localStorage.setItem('casetracker_v5',JSON.stringify(db))}
 
-function save(){localStorage.setItem('casetracker_v3', JSON.stringify(db))}
-
-function showPage(name, btn){
+function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
-  if(name==='list') renderList();
-  if(name==='visit') initVisit();
-  if(name==='history') initHistory();
+  if(name==='list')renderList();
+  if(name==='visit')initVisit();
+  if(name==='history')initHistory();
 }
 
-function getVisit(caseId,y,m){
-  return db.visits.find(v=>v.caseId===caseId&&v.year===y&&v.month===m)||{phone:'',home:''};
-}
+function getVisit(caseId,y,m){return db.visits.find(v=>v.caseId===caseId&&v.year===y&&v.month===m)||{phone:'',home:''};}
 function setVisit(caseId,y,m,field,val){
   let v=db.visits.find(v=>v.caseId===caseId&&v.year===y&&v.month===m);
   if(!v){v={caseId,year:y,month:m,phone:'',home:''};db.visits.push(v);}
   v[field]=val;save();
 }
-function reviewStatus(ds){
-  if(!ds)return'none';
-  const diff=Math.floor((today-new Date(ds))/(86400000));
-  if(diff>180)return'over';
-  if(diff>150)return'near';
-  return'ok';
-}
 
-
-function toggleReview(id, btn){
-  const c=db.cases.find(c=>c.id===id);
-  if(c){c.review_done=!c.review_done;save();}
-  btn.classList.toggle('done');
-  btn.textContent=c.review_done?'✓':'';
-}
 function renderList(){
-  const y=viewYear, m=viewMonth;
+  const y=viewYear,m=viewMonth;
   const q=(document.getElementById('search')||{}).value||'';
   document.getElementById('month-label').textContent=`${y}/${String(m).padStart(2,'0')}`;
-
-  let total=0,phoneDone=0,homeDone=0,overdue=0,urgent=0,anyDone=0;
-  const filtered = db.cases.filter(c=>c.name.includes(q));
-
-  const rows = filtered.map((c,idx)=>{
+  let total=0,phoneDone=0,homeDone=0,phoneCheck=0,homeCheck=0,urgent=0,anyDone=0;
+  const filtered=db.cases.filter(c=>c.name.includes(q));
+  const rows=filtered.map((c)=>{
     total++;
     const v=getVisit(c.id,y,m);
-    const pd=v.phone==='1', hd=v.home==='1';
+    const pd=v.phone==='1',hd=v.home==='1';
     if(pd)phoneDone++;
     if(hd)homeDone++;
     if(pd||hd)anyDone++;
-    const rs=reviewStatus(c.review);
-    // overdue removed
+    if(c.phone_done)phoneCheck++;if(c.home_done)homeCheck++;
     if(c.urgent)urgent++;
-    const revCls='';
-    const globalIdx = db.cases.indexOf(c)+1;
-    return `<tr>
-      <td class="num-cell">${globalIdx}</td>
+    const globalIdx=db.cases.indexOf(c)+1;
+    const isSel=c.id===selectedId;
+    return `<tr class="${isSel?'selected':''}">
+      <td class="num-cell" onclick="openPanel(${c.id})">${globalIdx}</td>
       <td>
         <div class="note-wrap">
-          <button class="urgent-btn ${c.urgent?'on':''}" onclick="toggleUrgent(${c.id},this)" title="待處理">!</button>
-          <input class="note-input" value="${esc(c.note)}" onchange="updCase(${c.id},'note',this.value)" placeholder="備註...">
+          <button class="urgent-btn ${c.urgent?'on':''}" onclick="toggleUrgent(${c.id},this)">!</button>
+          <textarea class="note-input" onchange="updCase(${c.id},'note',this.value)" placeholder="備註...">${esc2(c.note)}</textarea>
         </div>
       </td>
-      <td><input class="cell-input" value="${esc(c.name)}" onchange="updCase(${c.id},'name',this.value)"></td>
-      <td style="text-align:center"><button class="review-btn ${c.review_done?'done':''}" onclick="toggleReview(${c.id},this)" title="點擊標記複評完成">${c.review_done?'✓':''}</button></td>
+      <td class="name-cell" onclick="openPanel(${c.id})"><input class="cell-input" value="${esc(c.name)}" onchange="updCase(${c.id},'name',this.value)" style="cursor:pointer"></td>
+      <td class="check-cell" style="text-align:center"><button class="check-btn ${c.phone_done?'done':''}" onclick="togglePhoneDone(${c.id},this)" title="電訪完成">✓</button> <button class="check-btn ${c.home_done?'done':''}" onclick="toggleHomeDone(${c.id},this)" title="家訪完成" style="background:${c.home_done?'#1d9e75':'#fff'};border-color:${c.home_done?'#1d9e75':'#ddd'}">✓</button></td>
       <td class="${pd?'done-cell':''}"><input class="cell-input visit-input" value="${v.phone}" oninput="onVisit(${c.id},'phone',this)" placeholder=""></td>
       <td class="${hd?'done-cell':''}"><input class="cell-input visit-input" value="${v.home}" oninput="onVisit(${c.id},'home',this)" placeholder=""></td>
       <td><button class="del-btn" onclick="delCase(${c.id})">×</button></td>
     </tr>`;
   }).join('');
-
-  document.getElementById('tbody').innerHTML = rows;
-  document.getElementById('p-done').textContent = anyDone;
-  document.getElementById('p-total').textContent = total;
-  document.getElementById('p-bar').style.width = total>0?Math.round(anyDone/total*100)+'%':'0%';
-  document.getElementById('s-phone').textContent = phoneDone;
-  document.getElementById('s-home').textContent = homeDone;
-  document.getElementById('s-overdue').textContent = overdue;
-  document.getElementById('s-urgent').textContent = urgent;
+  document.getElementById('tbody').innerHTML=rows;
+  document.getElementById('p-done').textContent=anyDone;
+  document.getElementById('p-total').textContent=total;
+  document.getElementById('p-bar').style.width=total>0?Math.round(anyDone/total*100)+'%':'0%';
+  document.getElementById('s-phone').textContent=phoneDone;
+  document.getElementById('s-home').textContent=homeDone;
+  document.getElementById('s-phone-check').textContent=phoneCheck;document.getElementById('s-home-check').textContent=homeCheck;
+  document.getElementById('s-urgent').textContent=urgent;
 }
 
 function esc(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function esc2(s){return(s||'').replace(/</g,'&lt;')}
 
-function toggleUrgent(id, btn){
+function openPanel(id){
+  selectedId=id;
+  const c=db.cases.find(c=>c.id===id);
+  const idx=db.cases.indexOf(c)+1;
+  document.getElementById('side-panel').classList.add('open');
+  document.getElementById('side-name').textContent=c.name;
+  document.getElementById('side-num').textContent='個案編號 #'+idx;
+  document.getElementById('side-note').value=c.note||'';
+  document.getElementById('side-review').value=c.review||'';
+  const ub=document.getElementById('side-urgent-btn');
+  ub.className='urgent-toggle'+(c.urgent?' on':'');
+  ub.textContent=c.urgent?'！待處理中（點擊取消）':'！標記待處理';
+  renderList();
+}
+function closePanel(){
+  selectedId=null;
+  document.getElementById('side-panel').classList.remove('open');
+  renderList();
+}
+function saveSideNote(){
+  if(!selectedId)return;
+  const val=document.getElementById('side-note').value;
+  updCase(selectedId,'note',val);
+  renderList();
+  const btn=document.querySelector('.side-save');
+  btn.textContent='已儲存 ✓';setTimeout(()=>btn.textContent='儲存備註',1500);
+}
+function saveSideReview(){
+  if(!selectedId)return;
+  const val=document.getElementById('side-review').value;
+  updCase(selectedId,'review',val);
+}
+function toggleUrgentSide(){
+  if(!selectedId)return;
+  const c=db.cases.find(c=>c.id===selectedId);
+  if(c){c.urgent=!c.urgent;save();}
+  const btn=document.getElementById('side-urgent-btn');
+  btn.className='urgent-toggle'+(c.urgent?' on':'');
+  btn.textContent=c.urgent?'！待處理中（點擊取消）':'！標記待處理';
+  renderList();
+}
+function toggleUrgent(id,btn){
   const c=db.cases.find(c=>c.id===id);
   if(c){c.urgent=!c.urgent;save();}
   btn.classList.toggle('on');
-  const s=parseInt(document.getElementById('s-urgent').textContent)||0;
-  document.getElementById('s-urgent').textContent=c.urgent?s+1:Math.max(0,s-1);
+  renderList();
 }
-
+function togglePhoneDone(id,btn){
+  const c=db.cases.find(c=>c.id===id);
+  if(c){c.phone_done=!c.phone_done;save();}
+  btn.classList.toggle('done');
+  renderList();
+}
+function toggleHomeDone(id,btn){
+  const c=db.cases.find(c=>c.id===id);
+  if(c){c.home_done=!c.home_done;save();}
+  btn.classList.toggle('done');
+  renderList();
+}
 function onVisit(id,field,input){
   const val=input.value.trim();
   setVisit(id,viewYear,viewMonth,field,val);
@@ -308,7 +374,16 @@ function updCase(id,field,val){
 function addCase(){
   const name=prompt('請輸入個案姓名：');
   if(!name||!name.trim())return;
-  db.cases.push({id:db.nid++,note:'',urgent:false,name:name.trim(),review:''});
+  const total=db.cases.length;
+  const pos=prompt(`插入位置：\n輸入要插在第幾號後面（1～${total}）\n留空白或輸入 0 = 加到最後面`);
+  const newCase={id:db.nid++,note:'',urgent:false,name:name.trim(),review:'',phone_done:false,home_done:false};
+  const idx=parseInt(pos);
+  if(!pos||pos.trim()===''||idx<=0||isNaN(idx)){
+    db.cases.push(newCase);
+  } else {
+    const insertAt=Math.min(idx,total);
+    db.cases.splice(insertAt,0,newCase);
+  }
   save();renderList();
 }
 function delCase(id){
@@ -316,23 +391,13 @@ function delCase(id){
   db.cases=db.cases.filter(c=>c.id!==id);
   db.visits=db.visits.filter(v=>v.caseId!==id);
   db.records=db.records.filter(r=>r.caseId!==id);
+  if(selectedId===id)closePanel();
   save();renderList();
 }
-function changeMonth(d){
-  viewMonth+=d;
-  if(viewMonth>12){viewMonth=1;viewYear++;}
-  if(viewMonth<1){viewMonth=12;viewYear--;}
-  renderList();
-}
+function changeMonth(d){viewMonth+=d;if(viewMonth>12){viewMonth=1;viewYear++;}if(viewMonth<1){viewMonth=12;viewYear--;}renderList();}
 function goToday(){viewYear=today.getFullYear();viewMonth=today.getMonth()+1;renderList();}
 
-const OPTS={
-  mob:['自行行走','需輔具','需他人協助','臥床','使用輪椅'],
-  env:['環境整潔','環境雜亂','有跌倒風險','採光不足','無障礙設施不足','環境良好'],
-  mood:['穩定','焦慮','憂鬱','配合度佳','抗拒服務','情緒激動'],
-  svc:['居家服務','日照中心','送餐服務','交通接送','輔具借用','喘息服務','醫療陪同','急難救助'],
-  risk:['無立即風險','跌倒風險','營養不良','社會孤立','照顧者壓力大','需緊急介入']
-};
+const OPTS={mob:['自行行走','需輔具','需他人協助','臥床','使用輪椅'],env:['環境整潔','環境雜亂','有跌倒風險','採光不足','無障礙設施不足','環境良好'],mood:['穩定','焦慮','憂鬱','配合度佳','抗拒服務','情緒激動'],svc:['居家服務','日照中心','送餐服務','交通接送','輔具借用','喘息服務','醫療陪同','急難救助'],risk:['無立即風險','跌倒風險','營養不良','社會孤立','照顧者壓力大','需緊急介入']};
 function initVisit(){
   const sel=document.getElementById('v-case');
   sel.innerHTML='<option value="">-- 請選擇 --</option>'+db.cases.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
@@ -366,13 +431,11 @@ function generateRecord(){
   save();
   document.getElementById('result-area').innerHTML=`<div class="result-box">${text.replace(/\n/g,'<br>')}</div><button class="copy-btn" onclick="navigator.clipboard.writeText(\`${text.replace(/`/g,'\\`')}\`).then(()=>{this.textContent='已複製 ✓';setTimeout(()=>this.textContent='複製紀錄文字',1500)})">複製紀錄文字</button>`;
 }
-
 function initHistory(){
   const sel=document.getElementById('h-case');
   const cur=sel.value;
   sel.innerHTML='<option value="">全部個案</option>'+db.cases.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-  sel.value=cur;
-  renderHistory();
+  sel.value=cur;renderHistory();
 }
 function renderHistory(){
   const fid=parseInt(document.getElementById('h-case').value)||null;
@@ -397,7 +460,6 @@ function delRecord(id){
   db.records=db.records.filter(r=>r.id!==id);
   save();renderHistory();
 }
-
 renderList();
 </script>
 </body>
