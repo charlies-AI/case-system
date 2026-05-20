@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>個案管理系統</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;background:#f5f5f5;color:#1a1a1a;min-height:100vh}
@@ -270,19 +273,30 @@ tr.selected:hover td{background:#e8f3ff}
 
 </div>
 <script>
+// Firebase 設定
+const firebaseConfig = {
+  apiKey: "AIzaSyDPg0N9zNA8avG9I-M_SboxdphHArJEwm4",
+  authDomain: "case-manager-41bcf.firebaseapp.com",
+  databaseURL: "https://case-manager-41bcf-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "case-manager-41bcf",
+  storageBucket: "case-manager-41bcf.firebasestorage.app",
+  messagingSenderId: "37258834461",
+  appId: "1:37258834461:web:f768d49f78d6db78570cf4"
+};
+firebase.initializeApp(firebaseConfig);
+const fbdb = firebase.database();
+const dbRef = fbdb.ref('casetracker_v5');
+
 const NAMES = ["楊王玲珠","李佳榮","李淑娟","蕭新喜","曹橋林","蕭濱星","高金玉","朱豪哲","李基顯","陳亭臻","李瑞仙","陳劉甚","陳葉月枝","林羅俊","張國基","柯春男","游照美","曾素敏","吳慧貞","張楊彩","楊美雲","莊武男","羅莉","林劍亭","黃士馨","黃江泉","陳吳寶","劉麗秀","江鄭脩","周美霞","邵代卿","劉春枝","許純真/郭天賜","郭天賜/許純真","曾木耳","余錦魚","李簡喜蓮","曾淑敏","郭錦秀","黃曹彩鑾","邱錦檉","盧景麟","賴石完","郭佳錦","陳許採雲","李佳倖","陳謂寬","謝桃枝","米張書香","柳鳳春","吳呂美珠","吳涂綺玲","賴藝仁","徐天一","劉椿隆","楊嘉芸","鍾雲秀","許兆年 (許黃阿雪)","陳陽明","林惠瑩 (黃仲雄)","林趙金枝","許黃阿雪(許兆年)","李香妹","許乃","陳碧蓮","劉金德 (王寶蓮)","王寶蓮 (劉金德)","周謝佩玲","陳寶珠","陳國翹","朱平啟媛","黃竹發","高陳麗","高清河","王張素珠","洪鄭詠雪 (洪焜城)","高瑞宏","趙容(林春富)","林春富(趙容)","張薫圭","莊玉梅","葉曾秀梅","林蔡正","劉坤堂","曾淑貞","卓林阿滿","李佳州","陳朝瑞","李青蓉","吳懿庭","楊義勝","林秀鳳","劉晋榮","賴良","邱蕭秀櫻","嚴陳秀枝","李呂美朋 (李暮榮)","李暮榮 (李呂美朋)","陳珪琪","黃種銓 (謝錦霜)","謝錦霜 (黃種銓)","李懷真","許碧霞","林黃靜宜","陳麗娟","李福生","林博昭","王金地","邱寶珠","林麗華","林廖香綢","粘少華","吳鳳玉","廖碧玉","林楊淑慧","洪焜城 (洪鄭詠雪)","譚福修","陳蔡淑媛","柯雪治","張莊秀香 (張添進)","張添進 (張莊秀香)","謝梅","劉怡孋","黃月桂","高順顯","華寶餘","陳簡郁蘭","林游澄澄","鄧筑源","劉勤","陳侯阿秀","陳水力","曹杰福","錢建嘉","廖雪珍","簡漢陽","黃秀美","富蒼生","周蔚任","謝王釋敏","陳俊昭","花雲源","張淼本","林禮中","馬元得","陳群品","紀昭行","連錦涁","林清緹","林蕙莞"];
 
 const today = new Date();
 let viewYear = today.getFullYear();
 let viewMonth = today.getMonth()+1;
 let selectedId = null;
+let db = null;
 
-let db = JSON.parse(localStorage.getItem('casetracker_v5')||'null');
-if(!db){
-  db={nid:NAMES.length+1,cases:NAMES.map((name,i)=>({id:i+1,note:'',urgent:false,name,review:'',phone_done:false,home_done:false})),visits:[],records:[]};
-  localStorage.setItem('casetracker_v5',JSON.stringify(db));
-}
-function save(){localStorage.setItem('casetracker_v5',JSON.stringify(db))}
+function toArr(v){if(!v)return[];if(Array.isArray(v))return v;return Object.values(v);}
+function save(){dbRef.set(db);}
 
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -302,6 +316,7 @@ function setVisit(caseId,y,m,field,val){
 }
 
 function renderList(){
+  if(!db)return;
   const y=viewYear,m=viewMonth;
   const q=(document.getElementById('search')||{}).value||'';
   document.getElementById('month-label').textContent=`${y}/${String(m).padStart(2,'0')}`;
@@ -506,7 +521,17 @@ function delRecord(id){
   db.records=db.records.filter(r=>r.id!==id);
   save();renderHistory();
 }
-renderList();
+// 從 Firebase 載入資料
+dbRef.once('value').then(snapshot => {
+  const data = snapshot.val();
+  if(!data){
+    db={nid:NAMES.length+1,cases:NAMES.map((name,i)=>({id:i+1,note:'',urgent:false,name,review:'',phone_done:false,home_done:false})),visits:[],records:[]};
+    dbRef.set(db);
+  } else {
+    db={nid:data.nid||NAMES.length+1,cases:toArr(data.cases),visits:toArr(data.visits),records:toArr(data.records)};
+  }
+  renderList();
+});
 </script>
 </body>
 </html>
